@@ -1,0 +1,7 @@
+.vscode
+obj
+test.cpp
+*.jpeg
+a.out
+cpp_09.tgz
+data.csv
