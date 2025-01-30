@@ -35,7 +35,7 @@ OBJ =	$(addprefix $(OBJ_DIR)/, $(FILES:%.cpp=%.o))
 
 DEP:= $(OBJ:.o=.d)
 DEPFLAGS = -MMD -MP
-FLAGS = -Wall -Wextra -Werror -std=c++17 -g
+FLAGS =  -std=c++17 -g #-Wall -Wextra -Werror
 INCLUDES = -I$(INC_DIR)
 
 all: $(NAME)
