@@ -6,7 +6,7 @@
 /*   By: pstrohal <pstrohal@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:36:28 by pstrohal          #+#    #+#             */
-/*   Updated: 2025/01/27 20:22:26 by pstrohal         ###   ########.fr       */
+/*   Updated: 2025/01/31 17:27:39 by pstrohal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <map>
 #include <algorithm>
