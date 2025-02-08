@@ -6,7 +6,7 @@
 /*   By: pstrohal <pstrohal@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:18:00 by pstrohal          #+#    #+#             */
-/*   Updated: 2025/01/31 17:35:07 by pstrohal         ###   ########.fr       */
+/*   Updated: 2025/02/05 09:24:00 by pstrohal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,4 +156,3 @@ int main (int argc, char **argv)
 	}
 	input_file.close();
 	return 0;
-}
