@@ -1,5 +1,43 @@
 #include "../inc/PmergeMe.hpp"
 
+std::vector<int>::iterator binary_search(std::vector<int> &vec, std::vector<int>::iterator last, int value, size_t &counter)
+{
+	std::vector<int>::iterator it;
+	size_t count, step;
+	std::vector<int>::iterator first = vec.begin();
+	count = last - first;
+
+	while (count > 0)
+	{
+		it = first;
+		step = count / 2;
+		std::advance(it, step);
+		if (value < *it)
+		{
+			first = ++it;
+			count -= step + 1;
+		}
+		else
+			count = step;
+		counter++;
+	}
+ 
+	return first;
+}
+size_t next_jacobsthal(int reset)
+{
+	static size_t n = 3;
+	static size_t jacobsthal = 3;
+
+	jacobsthal = pow(2, n) - jacobsthal;
+	n++;
+	return jacobsthal;
+	if (reset)
+	{
+		n = 3;
+		jacobsthal = 3;
+	}
+}
 void pmerge(std::vector<int> &vec, int lvl, size_t &count)
 {
 	size_t range = pow(2, lvl);
@@ -33,7 +71,31 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &count)
 	if (vec.size() >= 2 * pow(2, lvl + 1))
 		pmerge(vec, lvl + 1, count);
 
-	if ((vec.size() / range )%2 != 0)
-		
+	b = vec.begin() + range - 1;
+	a = b + range;
+	size_t num = 0;
+	std::vector<int> pend;
+	std::vector<int> mainline;
+	for (std::vector<int>::iterator it = a + range; it < vec.end(); it += 2 * range)
+	{
+		pend.insert(pend.end(), it - range, it);
+		vec.erase(it - range, it);
+	}
+
+
+	size_t	jacobsthal;
+	while (pend.size() != 0)
+	{
+		jacobsthal = next_jacobsthal(0);
+		if (pend.size() < jacobsthal)
+			jacobsthal = pend.size() - 1;
+		while (jacobsthal >= 0)
+		{
+			
+		}
+
+	
+	}
+	(void)next_jacobsthal(1);
 }
 

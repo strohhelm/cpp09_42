@@ -29,7 +29,10 @@ int main(int argc, char **argv)
             std::string tmp(argv[i]);
             if (!std::regex_match(tmp, match, pattern))
                 throw std::string("Oh thats not a valid input!");
-            vec.insert(vec.end(), std::stoi(tmp));
+			int value = std::stoi(tmp);
+			if (std::find(vec.begin(), vec.end(), value) != vec.end())
+				throw std::string("Oh no duplicates allowed!");
+            vec.push_back(value);
         }
         
         
@@ -58,4 +61,5 @@ int main(int argc, char **argv)
     catch (std::string &e) {std::cout<<"ERROR: "<<e<<std::endl;return 1;}
     catch (...) {std::cout <<"LOL!"<<std::endl;return 1;}
     return 0;
+
 }   

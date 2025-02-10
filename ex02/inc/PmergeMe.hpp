@@ -17,5 +17,6 @@
 void pmerge(std::vector<int> &vec, int lvl, size_t &count);
 // void pmerge(std::deque<int> &deq, int lvl, size_t &count);
 
+size_t next_jacobsthal(void);
 
 #endif
