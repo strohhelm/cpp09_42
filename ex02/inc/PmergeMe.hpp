@@ -11,10 +11,11 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include <cmath>
 
 
-void pmerge(std::vector<int> &vec, int lvl);
-void pmerge(std::deque<int> &deq);
+void pmerge(std::vector<int> &vec, int lvl, size_t &count);
+// void pmerge(std::deque<int> &deq, int lvl, size_t &count);
 
 
 #endif
