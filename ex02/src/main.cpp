@@ -70,10 +70,10 @@ int main(int argc, char **argv)
         {
             std::string tmp(argv[i]);
             if (!std::regex_match(tmp, match, pattern))
-                throw std::string("Oh thats not a valid input only one value per argument!");
+                throw std::string("Oh thats not a valid input only one positive integer value per argument!");
 			int value = std::stoi(tmp);
-			if (std::find(vec.begin(), vec.end(), value) != vec.end())
-				throw std::string("Oh no duplicates allowed!");
+			// if (std::find(vec.begin(), vec.end(), value) != vec.end())
+			// 	throw std::string("Oh no duplicates allowed!");
             vec.push_back(value);
         }
         
@@ -92,10 +92,10 @@ int main(int argc, char **argv)
         std::cout<<"After: ";
         for_each (vec.begin(), vec.end(), [](int i){std::cout<<i<<" ";});
         std::cout<<std::endl;
-        auto duration_vec = std::chrono::duration_cast<std::chrono::microseconds>(vec_end - vec_start);
+        auto duration_vec = std::chrono::duration_cast<std::chrono::nanoseconds>(vec_end - vec_start);
         auto duration_deq = std::chrono::duration_cast<std::chrono::microseconds>(deq_end - deq_start);
         std::cout   <<"Time to process a range of " <<argc -1 <<" elements with std::vector: " 
-                    << duration_vec.count() <<std::endl;
+                   <<std::fixed<<std::setprecision(20) << duration_vec.count()/100000000000.0 <<std::endl;
 		std::cout<<"Comparisons: "<<vec_counter<<std::endl;
     }
     catch (std::exception &e){std::cout<<"Error: "<<e.what()<<std::endl;return 1;}
