@@ -27,7 +27,8 @@ vpath %.d $(DEP_DIR)
 
 
 FILES =	main.cpp\
-		PmergeVector.cpp
+		PmergeVector.cpp\
+		PmergeDeque.cpp
 
 
 

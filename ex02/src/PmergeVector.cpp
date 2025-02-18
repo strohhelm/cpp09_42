@@ -1,13 +1,10 @@
 #include "../inc/PmergeMe.hpp"
 
-
 void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 {
 	size_t range = pow(2, lvl);
 	auto b = vec.begin() + range - 1;
 	auto a = b + range;
-	// std::cout<<"\n\n========== "<<"lvl:"<<lvl<<" ===========\n"<<std::endl;
-	// std::cout<<"range: "<<range<<std::endl;
 	while (a < vec.end() && b < vec.end())
 	{
 		counter++;
@@ -23,10 +20,7 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 	}
 	if (vec.size() >= 2 * pow(2, lvl + 1))
 		pmerge(vec, lvl + 1, counter);
-	// std::cout<<"\n\n========== "<<"lvl:"<<lvl<<" ===========\n"<<std::endl;
-
 	//half of recursion is done, now comes the second part
-
 
 	//making a vactor for index tracking that holds the values of the coresponding indexes in the vec {b1, a1, b2, a2, ....,bn,an}
 	//after every insert, all indeces biger or equal than found index are increased by one
@@ -34,18 +28,12 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 	std::vector<int> index_tracker( vec.size() / range, -1);
 	index_tracker[0] = 0;
 	size_t index = 1;
-
-
 	//filling index_tracker with initial indeces for b1 and all a's.
 	//all b's from b1 and higher are set to -1 to indicate they are not sorted yet.
 	for(size_t i = 1; i <index_tracker.size(); i += 2)
 		index_tracker[i] = index++;
-
-
 	b = vec.begin() + range - 1;
 	a = b + range;
-	// std::cout<<"a = "<<*a<<std::endl;
-	// std::cout<<"b = "<<*b<<std::endl;
 	//dividing the main vector vec into vec and bline
 	for (std::vector<int>::iterator it = a + range; it < vec.end(); it += range)
 	{
@@ -53,19 +41,6 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 		bline.insert(bline.end(), it - (range - 1), it + 1);
 		vec.erase(it - (range - 1), it + 1);
 	}
-
-	// std::cout << "Contents of vec:"<<std::endl;
-	// for (size_t it = 0; it < vec.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << vec[it]<<" ";}
-	// std::cout <<std::endl;
-	// std::cout << "Contents of bline:"<<std::endl;
-	// for (size_t it = 0; it < bline.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << bline[it]<<" ";}
-	// std::cout <<std::endl;
-	// std::cout << "Contents of index_tracker:"<<std::endl;
-	// for_each (index_tracker.begin(), index_tracker.end(), [](int i){std::cout<<i<<" | ";});
-	// std::cout <<std::endl;
-
-	
-
 	// now i have 3 extra vectors:
 	// - vec, where everything is sorted correctly
 	// - bline where all b's are to be sorted into vec,
@@ -74,7 +49,6 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 	// i have to sort b's according to the jacobbsthal numbers for minimum maximum comparisons for bn.
 	// so i start with b3 then b2. then next jacobsthal number is 5 so i sort b5, then b4.
 	// Next JN in 11 so i sort b10, b9, b8, b7, b6. and so on.
-
 	size_t	current_jacobsthal;
 	size_t	previous_jacobsthal;
 	std::vector<int>::iterator	iter_to_insert_before;
