@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 			if (!std::regex_match(tmp, match, pattern))
 				throw std::string("Oh thats not a valid input only one positive integer value per argument!");
 			int value = std::stoi(tmp);
-			if (std::find(vec.begin(), vec.end(), value) != vec.end())
-				throw std::string("Oh no duplicates allowed!");
+			// if (std::find(vec.begin(), vec.end(), value) != vec.end())
+			// 	throw std::string("Oh no duplicates allowed!");
 			vec.push_back(value);
 			deq.push_back(value);
 		}
@@ -95,11 +95,11 @@ int main(int argc, char **argv)
 		auto duration_deq = std::chrono::duration_cast<std::chrono::microseconds>(deq_end - deq_start);
 		//vector
 		std::cout	<<"Time to process a range of " <<argc -1 <<" elements with std::vector<int>: " 
-					<< duration_vec.count() <<std::endl;
+					<< duration_vec.count() <<" microseconds"<<std::endl;
 		std::cout	<<"Comparisons for vector: "<<vec_counter<<std::endl;
 		//deque
 		std::cout	<<"Time to process a range of " <<argc -1 <<" elements with std::deque<int>: " 
-					<< duration_deq.count() <<std::endl;
+					<< duration_deq.count() <<" microseconds"<<std::endl;
 		std::cout<<"Comparisons: "<<deq_counter<<std::endl;
 	}
 	catch (std::exception &e){std::cout<<"Error: "<<e.what()<<std::endl;return 1;}

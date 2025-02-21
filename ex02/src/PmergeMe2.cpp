@@ -73,6 +73,13 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 			//b1 is already on mainline so bn line starts with bn_index 2 at range index 0 (begin + (range - 1)) -> jacobsthal - 2
 		while (current_jacobsthal > previous_jacobsthal)
 		{
+			// std::cout<<"current Jacobsthal: "<<current_jacobsthal<<"	previous: "<<previous_jacobsthal<<std::endl;
+			// std::cout << "Contents of deq:"<<std::endl;
+			// for (size_t it = 0; it < deq.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << deq[it]<<" ";}
+			// std::cout <<std::endl;
+			// std::cout << "Contents of bline:"<<std::endl;
+			// for (size_t it = 0; it < bline.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << bline[it]<<" ";}
+			// std::cout <<std::endl;
 			bn_index = (current_jacobsthal - 1) * 2;
 			//in case the rest of the sequence is enough to build its own element blast
 			if (bn_index + 1 < index_tracker.size())
@@ -85,7 +92,7 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 			if (iter_to_insert_before != deq.end())
 				iter_to_insert_before -= (range - 1);
 			else if (iter_to_insert_before == deq.end() && last != deq.end() - 1)
-				iter_to_insert_before = last + 1;
+				iter_to_insert_before = last - range + 1;
 			new_index_of_bn_in_deq = (iter_to_insert_before - deq.begin()) / range;
 			// in case the element gets added to the end of deq, its index needs to be increased 
 			if (iter_to_insert_before == deq.end() || new_index_of_bn_in_deq < 0)
@@ -104,9 +111,17 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 				if (it == index_tracker.begin() + bn_index)
 					*it = new_index_of_bn_in_deq;
 			}
-			bn_line_iter -= range;
 			current_jacobsthal--;
+			bn_line_iter = (bline.begin() -1 ) + ((current_jacobsthal - previous_jacobsthal) * range); //deque iterator change for working program
+		// std::cout <<std::endl;
 		}
 	}
+
 	(void)jacobsthal(1);
+	// 	std::cout << "Contents of deq:"<<std::endl;
+	// 	for (size_t it = 0; it < deq.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << deq[it]<<" ";}
+	// 	std::cout <<std::endl;
+	// std::cout << "======= recursion lvl: "<<lvl<<" done\n"<<std::endl;
 }
+
+// 26 1 37 39 25 30 1 16 17 14 27 18 27 15 23 40 11 12 40 2 26 22 2 35 2 19 2 17 36 31 33 32 23 7 2 18 12 6 1 34

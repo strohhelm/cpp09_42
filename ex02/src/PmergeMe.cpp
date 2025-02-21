@@ -56,8 +56,17 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 	std::vector<int>::iterator bn_line_iter;
 	std::vector<int>::iterator last;
 	int new_index_of_bn_in_vec;
+	// std::cout << "Contents of index_tracker:"<<std::endl;
+	// for_each (index_tracker.begin(), index_tracker.end(), [](int i){std::cout<<i<<" | ";});
+	// std::cout <<std::endl;
 	while (bline.size() != 0)
 	{
+		// std::cout << "Contents of vec:"<<std::endl;
+		// for (size_t it = 0; it < vec.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << vec[it]<<" ";}
+		// std::cout <<std::endl;
+		// std::cout << "Contents of bline:"<<std::endl;
+		// for (size_t it = 0; it < bline.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << bline[it]<<" ";}
+		// std::cout <<std::endl;
 		current_jacobsthal = jacobsthal(0);
 		previous_jacobsthal = jacobsthal(2);
 		// if there are less b ranges left in bline than the next insertion would start from
@@ -84,7 +93,7 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 			if (iter_to_insert_before != vec.end())
 				iter_to_insert_before -= (range - 1);
 			else if (iter_to_insert_before == vec.end() && last != vec.end() - 1)
-				iter_to_insert_before = last + 1;
+				iter_to_insert_before = last - range + 1;
 			new_index_of_bn_in_vec = (iter_to_insert_before - vec.begin()) / range;
 			// in case the element gets added to the end of vec, its index needs to be increased 
 			if (iter_to_insert_before == vec.end() || new_index_of_bn_in_vec < 0)
@@ -106,6 +115,12 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 			bn_line_iter -= range;
 			current_jacobsthal--;
 		}
+		// std::cout<<std::endl;
 	}
 	(void)jacobsthal(1);
+	// std::cout << "Contents of vec:"<<std::endl;
+	// 	for (size_t it = 0; it < vec.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << vec[it]<<" ";}
+	// 	std::cout <<std::endl;
+	// std::cout << "======= recursion lvl: "<<lvl<<" done\n"<<std::endl;
+
 }

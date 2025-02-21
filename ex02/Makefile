@@ -37,7 +37,7 @@ OBJ =	$(addprefix $(OBJ_DIR)/, $(FILES:%.cpp=%.o))
 
 DEP:= $(OBJ:.o=.d)
 DEPFLAGS = -MMD -MP
-FLAGS =  -std=c++17 -O0 -g -Wall -Wextra -Werror
+FLAGS =  -std=c++17 -Ofast -Wall -Wextra -Werror
 INCLUDES = -I$(INC_DIR)
 
 all: $(NAME)
@@ -49,7 +49,7 @@ $(NAME):$(OBJ)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	@$(CC) $(FLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@ -O0 -g
+	@$(CC) $(FLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@ -Ofast
 
 clean:
 	@rm -rf $(OBJ_DIR)
