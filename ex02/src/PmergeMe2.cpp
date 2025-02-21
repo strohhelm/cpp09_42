@@ -22,7 +22,7 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 		pmerge(deq, lvl + 1, counter);
 	//half of recursion is done, now comes the second part
 
-	//making a vactor for index tracking that holds the values of the coresponding indexes in the deq {b1, a1, b2, a2, ....,bn,an}
+	//making a deque for index tracking that holds the values of the coresponding indexes in the deq {b1, a1, b2, a2, ....,bn,an}
 	//after every insert, all indeces biger or equal than found index are increased by one
 	std::deque<int> bline;
 	std::deque<int> index_tracker( deq.size() / range, -1);
@@ -34,10 +34,11 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 		index_tracker[i] = index++;
 	b = deq.begin() + range - 1;
 	a = b + range;
+	std::deque<int>::iterator it = deq.begin() + range - 1 + range + range;
 	//dividing the main deque deq into deq and bline
-	for (std::deque<int>::iterator it = a + range; it < deq.end(); it += range)
+	for (size_t i = 1; deq.begin() + range - 1 + range + i * range < deq.end(); i++)
 	{
-		// std::cout<<"it: "<<*it<<std::endl;
+		it = deq.begin() + range - 1 + range + i * range;
 		bline.insert(bline.end(), it - (range - 1), it + 1);
 		deq.erase(it - (range - 1), it + 1);
 	}
@@ -48,7 +49,7 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 
 	// i have to sort b's according to the jacobbsthal numbers for minimum maximum comparisons for bn.
 	// so i start with b3 then b2. then next jacobsthal number is 5 so i sort b5, then b4.
-	// Next JN is 11 so i sort b10, b9, b8, b7, b6. and so on.
+	// Next JN in 11 so i sort b10, b9, b8, b7, b6. and so on.
 	size_t	current_jacobsthal;
 	size_t	previous_jacobsthal;
 	std::deque<int>::iterator	iter_to_insert_before;
@@ -79,7 +80,7 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 			else
 				last = deq.end() - 1;
 			//returns the iter where iter - range is the actual index where in deq range of (bn - range, bn) should be inserted
-			iter_to_insert_before = binary_search(deq, last, *bn_line_iter, counter, range);
+			iter_to_insert_before = binary_search( deq, last, *bn_line_iter, counter, range);
 			// case for inserting after last index but last is not the last range index of deq.
 			if (iter_to_insert_before != deq.end())
 				iter_to_insert_before -= (range - 1);

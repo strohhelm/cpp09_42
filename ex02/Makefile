@@ -27,8 +27,8 @@ vpath %.d $(DEP_DIR)
 
 
 FILES =	main.cpp\
-		PmergeVector.cpp\
-		PmergeDeque.cpp
+		PmergeMe.cpp\
+		PmergeMe2.cpp
 
 
 
@@ -37,7 +37,7 @@ OBJ =	$(addprefix $(OBJ_DIR)/, $(FILES:%.cpp=%.o))
 
 DEP:= $(OBJ:.o=.d)
 DEPFLAGS = -MMD -MP
-FLAGS =  -std=c++17 -Ofast -Wall -Wextra #-Werror
+FLAGS =  -std=c++17 -O0 -g -Wall -Wextra -Werror
 INCLUDES = -I$(INC_DIR)
 
 all: $(NAME)
@@ -49,7 +49,7 @@ $(NAME):$(OBJ)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
-	@$(CC) $(FLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@ -Ofast
+	@$(CC) $(FLAGS) $(DEPFLAGS) $(INCLUDES) -c $< -o $@ -O0 -g
 
 clean:
 	@rm -rf $(OBJ_DIR)
@@ -60,3 +60,7 @@ fclean: clean
 re: fclean all
 
 .PHONY: clean fclean all re
+
+
+# 38 39 41 43 45 48 51 53 55 58 61 65 69 73 77 80
+# 38 39 41 43 45 48 51 54 57 60 62 64 67 69 71 75 79 83 87 91 95 99 103

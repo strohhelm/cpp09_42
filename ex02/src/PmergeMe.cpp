@@ -22,7 +22,7 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 		pmerge(vec, lvl + 1, counter);
 	//half of recursion is done, now comes the second part
 
-	//making a vactor for index tracking that holds the values of the coresponding indexes in the vec {b1, a1, b2, a2, ....,bn,an}
+	//making a vector for index tracking that holds the values of the coresponding indexes in the vec {b1, a1, b2, a2, ....,bn,an}
 	//after every insert, all indeces biger or equal than found index are increased by one
 	std::vector<int> bline;
 	std::vector<int> index_tracker( vec.size() / range, -1);
@@ -79,7 +79,7 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 			else
 				last = vec.end() - 1;
 			//returns the iter where iter - range is the actual index where in vec range of (bn - range, bn) should be inserted
-			iter_to_insert_before = binary_search(vec, last, *bn_line_iter, counter, range);
+			iter_to_insert_before = binary_search( vec, last, *bn_line_iter, counter, range);
 			// case for inserting after last index but last is not the last range index of vec.
 			if (iter_to_insert_before != vec.end())
 				iter_to_insert_before -= (range - 1);
@@ -109,5 +109,3 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 	}
 	(void)jacobsthal(1);
 }
-
-//  "7", " 8", "16", "21", "18", "13", " 6", "14", "11", " 9", " 1", "12", " 5", "10", " 3", "20", " 4", "19", "15", "17", " 2"

@@ -25,6 +25,16 @@ size_t jacobsthal(int mode)
 		return previous;
 }
 
+size_t calc_max_comp(size_t n)
+{
+	size_t sum = 0;
+	for (size_t k = 1; k <= n; k++)
+	{
+		sum += static_cast<size_t>(std::ceil(std::log2(3.0 * k / 4.0)));
+	}
+	return (sum);
+}
+
 int main(int argc, char **argv)
 {
 	try {
@@ -32,7 +42,11 @@ int main(int argc, char **argv)
 		std::deque<int> deq;
 		std::regex pattern("^[\\s]*[0-9]+[\\s]*$");
 		std::smatch match;
+		size_t vec_counter = 0;
+		size_t deq_counter = 0;
 
+
+		//input handling
 		if (argc < 2)
 			throw std::string("Need arguments!");
 		if (argc > std::numeric_limits<int>::max())
@@ -46,29 +60,46 @@ int main(int argc, char **argv)
 			if (std::find(vec.begin(), vec.end(), value) != vec.end())
 				throw std::string("Oh no duplicates allowed!");
 			vec.push_back(value);
+			deq.push_back(value);
 		}
 
-		std::cout<<"Before: ";
+
+		std::cout<<"VEC Before: ";
 		for_each (vec.begin(), vec.end(), [](int i){std::cout<<i<<" ";});
+		std::cout<<"\nDEQ Before: ";
+		for_each (deq.begin(), deq.end(), [](int i){std::cout<<i<<" ";});
 		std::cout<<std::endl;
+		
+		//main part and stopping times
 		const auto vec_start = std::chrono::high_resolution_clock::now();
-		size_t vec_counter = 0;
 		pmerge(vec, 0, vec_counter);
 		const auto vec_end = std::chrono::high_resolution_clock::now(); 
+		
 		const auto deq_start = std::chrono::high_resolution_clock::now(); 
-		size_t deq_counter = 0;
 		pmerge(deq, 0, deq_counter);
 		const auto deq_end = std::chrono::high_resolution_clock::now(); 
-		std::cout<<"After: ";
+		
+		
+		std::cout<<"VEC After: ";
 		for_each (vec.begin(), vec.end(), [](int i){std::cout<<i<<" ";});
 		std::cout<<std::endl;
-		auto duration_vec = std::chrono::duration_cast<std::chrono::nanoseconds>(vec_end - vec_start);
+		std::cout<<"DEQ After: ";
+		for_each (deq.begin(), deq.end(), [](int i){std::cout<<i<<" ";});
+		std::cout<<std::endl;
+		
+		std::cout<<"Maximum comparisons for "<<argc - 1<<" numbers: "<<calc_max_comp(static_cast<size_t>((argc - 1)))<<std::endl;
+
+
+		//print statements
+		auto duration_vec = std::chrono::duration_cast<std::chrono::microseconds>(vec_end - vec_start);
 		auto duration_deq = std::chrono::duration_cast<std::chrono::microseconds>(deq_end - deq_start);
-		std::cout	<<"Time to process a range of " <<argc -1 <<" elements with std::vector: " 
-					<<std::fixed<<std::setprecision(20) << duration_vec.count()/100000000000.0 <<std::endl;
-		std::cout<<"Comparisons: "<<vec_counter<<std::endl;
-		std::cout	<<"Time to process a range of " <<argc -1 <<" elements with std::deque: " 
-				<<std::fixed<<std::setprecision(20) << duration_deq.count()/100000000000.0 <<std::endl;
+		//vector
+		std::cout	<<"Time to process a range of " <<argc -1 <<" elements with std::vector<int>: " 
+					<< duration_vec.count() <<std::endl;
+		std::cout	<<"Comparisons for vector: "<<vec_counter<<std::endl;
+		//deque
+		std::cout	<<"Time to process a range of " <<argc -1 <<" elements with std::deque<int>: " 
+					<< duration_deq.count() <<std::endl;
 		std::cout<<"Comparisons: "<<deq_counter<<std::endl;
 	}
 	catch (std::exception &e){std::cout<<"Error: "<<e.what()<<std::endl;return 1;}
@@ -81,3 +112,5 @@ int main(int argc, char **argv)
 // 20  1  4  2 17 11  9  3  8  5 10 12 14 18 13  6 21  7 15 19 16 
 // 18 20 13  2 10  6 17  8  3 21  4  7  5  9 15 16  1 12 11 14 19
 // 15 10 11  9 13  8 14  3 16  2 18 12  1  7 21 17 19  6  5 20 4
+// "15", "10", "11", " 9", "13", " 8", "14", " 3", "16", " 2", "18", "12", " 1", " 7", "21", "17", "19", " 6", " 5", "20", "4"
+// 7  8 16 21 18 13  6 14 11  9  1 12  5 10  3 20  4 19 15 17
