@@ -83,21 +83,24 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 			bn_index = (current_jacobsthal - 1) * 2;
 			//in case the rest of the sequence is enough to build its own element blast
 			if (bn_index + 1 < index_tracker.size())
-				last = deq.begin() + (range - 1) + index_tracker[bn_index + 1] * range;
+				last = deq.begin() + (range - 1) + index_tracker[bn_index + 1] * range - range;
 			else
-				last = deq.end() - 1;
+				last = deq.begin() -1 + (deq.size() / range) * range - range;
+			// std::cout << "last range:"<<std::endl;
+			// for (size_t it = 0; it < range; it ++){std::cout << *(last - (range - 1) + it)<<" ";}
+			// std::cout <<std::endl;
 			//returns the iter where iter - range is the actual index where in deq range of (bn - range, bn) should be inserted
 			iter_to_insert_before = binary_search( deq, last, *bn_line_iter, counter, range);
 			// case for inserting after last index but last is not the last range index of deq.
 			if (iter_to_insert_before != deq.end())
 				iter_to_insert_before -= (range - 1);
-			else if (iter_to_insert_before == deq.end() && last != deq.end() - 1)
-				iter_to_insert_before = last - range + 1;
+			else if (iter_to_insert_before == deq.end())
+				iter_to_insert_before = last + 1;
 			new_index_of_bn_in_deq = (iter_to_insert_before - deq.begin()) / range;
 			// in case the element gets added to the end of deq, its index needs to be increased 
 			if (iter_to_insert_before == deq.end() || new_index_of_bn_in_deq < 0)
 				new_index_of_bn_in_deq++;
-
+			
 			//			actual index in deq to insert |	range index current bn
 			deq.insert(iter_to_insert_before, bn_line_iter - (range - 1), bn_line_iter + 1);
 			//removing the just inserted bn from bline

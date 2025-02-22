@@ -84,20 +84,35 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 			bn_index = (current_jacobsthal - 1) * 2;
 			//in case the rest of the sequence is enough to build its own element blast
 			if (bn_index + 1 < index_tracker.size())
-				last = vec.begin() + (range - 1) + index_tracker[bn_index + 1] * range;
+				last = vec.begin() + (range - 1) + index_tracker[bn_index + 1] * range - range;
 			else
-				last = vec.end() - 1;
+				last = vec.begin() -1 + (vec.size() / range) * range - range;
+
+			// std::cout << "last range:"<<std::endl;
+			// for (size_t it = 0; it < range; it ++){std::cout << *(last - (range - 1) + it)<<" ";}
+			// std::cout <<std::endl;
+
+			// std::cout << "range to insert:"<<std::endl;
+			// for (size_t it = 0; it < range; it ++){std::cout << *(bn_line_iter - (range - 1) + it)<<" ";}
+			// std::cout <<std::endl;
+
+
 			//returns the iter where iter - range is the actual index where in vec range of (bn - range, bn) should be inserted
 			iter_to_insert_before = binary_search( vec, last, *bn_line_iter, counter, range);
 			// case for inserting after last index but last is not the last range index of vec.
 			if (iter_to_insert_before != vec.end())
 				iter_to_insert_before -= (range - 1);
-			else if (iter_to_insert_before == vec.end() && last != vec.end() - 1)
-				iter_to_insert_before = last - range + 1;
+			else if (iter_to_insert_before == vec.end())
+				iter_to_insert_before = last + 1;
+
 			new_index_of_bn_in_vec = (iter_to_insert_before - vec.begin()) / range;
 			// in case the element gets added to the end of vec, its index needs to be increased 
 			if (iter_to_insert_before == vec.end() || new_index_of_bn_in_vec < 0)
 				new_index_of_bn_in_vec++;
+
+			// std::cout << "range to insert before:"<<std::endl;
+			// for (size_t it = 0; it < range && iter_to_insert_before + it != vec.end(); it ++){std::cout << *(iter_to_insert_before + it)<<" ";}
+			// std::cout <<std::endl;
 
 			//			actual index in vec to insert |	range index current bn
 			vec.insert(iter_to_insert_before, bn_line_iter - (range - 1), bn_line_iter + 1);
@@ -114,8 +129,12 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 			}
 			bn_line_iter -= range;
 			current_jacobsthal--;
+		// std::cout << "Contents of vec:"<<std::endl;
+		// for (size_t it = 0; it < vec.size(); it ++){if (it % (size_t)pow(2, lvl) == 0){std ::cout <<"| ";}std::cout << vec[it]<<" ";}
+		// std::cout <<std::endl;
+		// std::cout<<"--------------------inserted---------------\n"<<std::endl;
+
 		}
-		// std::cout<<std::endl;
 	}
 	(void)jacobsthal(1);
 	// std::cout << "Contents of vec:"<<std::endl;

@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 		pmerge(deq, 0, deq_counter);
 		const auto deq_end = std::chrono::high_resolution_clock::now(); 
 		
-		
+		std::cout<<std::endl;
 		std::cout<<"VEC After: ";
 		for_each (vec.begin(), vec.end(), [](int i){std::cout<<i<<" ";});
 		std::cout<<std::endl;
@@ -87,6 +87,15 @@ int main(int argc, char **argv)
 		for_each (deq.begin(), deq.end(), [](int i){std::cout<<i<<" ";});
 		std::cout<<std::endl;
 		
+		for(size_t i = 0; i < vec.size(); i++)
+		{
+			if (vec[i] != deq[i])
+				throw std::string("LOL vec and deq not equal, you fucked up!");
+		}
+		if (deq_counter != vec_counter)
+			throw std::string("LOL counter not equal, you fucked up!");
+		if (!std::is_sorted(vec.begin(), vec.end()))
+			throw std::string("LOL not sorted, you fucked up!");
 		std::cout<<"Maximum comparisons for "<<argc - 1<<" numbers: "<<calc_max_comp(static_cast<size_t>((argc - 1)))<<std::endl;
 
 
@@ -114,3 +123,12 @@ int main(int argc, char **argv)
 // 15 10 11  9 13  8 14  3 16  2 18 12  1  7 21 17 19  6  5 20 4
 // "15", "10", "11", " 9", "13", " 8", "14", " 3", "16", " 2", "18", "12", " 1", " 7", "21", "17", "19", " 6", " 5", "20", "4"
 // 7  8 16 21 18 13  6 14 11  9  1 12  5 10  3 20  4 19 15 17
+
+//6 3 7 2 7 5 9 5 8 3 9 2 4 6 3 2 8 10 7 8 9
+// "6", "3", "7", "2", "7", "5", "9", "5", "8", "3", "9", "2", "4", "6", "3", "2", "8", "10", "7", "8", "9"
+
+//14 9 9 13 7 1 9 15 15 7 12 12 15 7 10 12 18 8 1 17 19
+// 5 9 16 11 13 15 8 14 8 3 19 2 16 11 5 20 14 11 18 21 18 
+
+
+// 17 3  20  19  18  2  21  6 18  16  12  5  3  2  10  11  6  18  11  1 8 10  12  15  19  10  1 12  14  12  16

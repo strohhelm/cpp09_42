@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pstrohal <pstrohal@42.heilbronn.de>        #+#  +:+       +#+        */
+/*   By: pstrohal <pstrohal@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-02 09:08:09 by pstrohal          #+#    #+#             */
-/*   Updated: 2025-02-02 09:08:09 by pstrohal         ###   ########.fr       */
+/*   Created: 2025/02/02 09:08:09 by pstrohal          #+#    #+#             */
+/*   Updated: 2025/02/22 15:54:26 by pstrohal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ int main(int argc, char **argv)
 {
 	try{
 	if (argc != 2 || !*argv[1])
-		throw "Error usage: ./RPN \".....\"";
+		throw "Error usage: ./RPN \"..<0-9> any order <+ - / *> ...\"";
 	std::string input = argv[1];
 	std::regex first_filter("^[\\d\\+\\-\\*\\/ ]+?$");
 	std::regex second_filter(R"([0-9+\-*/]+?)");
 	std::stack<float>	storage;
 	std::smatch match;
 	if(!std::regex_match(input, match, first_filter))
-		throw "Error";
+		throw "Error bad input";
 	std::sregex_iterator it(input.begin(), input.end(), second_filter);
 	std::sregex_iterator end;
 	for(; it != end; it++)
 	{
 		if (storage.size() < 2 && !std::isdigit(it->str()[0]))
-			throw "Error: needs al least two operands first!";
+			throw "Error: needs at least two operands first!";
 		else if (std::isdigit(it->str()[0]))
 			storage.push(std::stof(it->str()));
 		else if (!std::isdigit(it->str()[0]))

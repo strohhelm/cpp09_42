@@ -6,7 +6,7 @@
 /*   By: pstrohal <pstrohal@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 12:18:00 by pstrohal          #+#    #+#             */
-/*   Updated: 2025/02/05 09:24:00 by pstrohal         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:43:12 by pstrohal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 			// }
 #include "../inc/bitcoinExchange.hpp"
 
-unsigned int validate_smatch(std::smatch &match, int &errorcode, float &value, bool databasemode)
+unsigned int validate_smatch(std::smatch &match, int &errorcode, double &value, bool databasemode)
 {
 	try{
 		if (match.size() != 6)
@@ -52,12 +52,12 @@ unsigned int validate_smatch(std::smatch &match, int &errorcode, float &value, b
 	catch(int &errorcode){return -errorcode;}
 }
 
-bool	fill_database(std::map<unsigned int, float> &database, std::ifstream &file)
+bool	fill_database(std::map<unsigned int, double> &database, std::ifstream &file)
 {
 	std::string		tmp;
 	std::smatch		match;
 	unsigned int	date;
-	float			value;
+	double			value;
 	int				errorcode = 0;
 	bool			start = false;
 	std::regex pattern("(^\\d{4})-(\\d{2})-(\\d{2}),(\\d+(\\.\\d+)?$)");
@@ -76,10 +76,6 @@ bool	fill_database(std::map<unsigned int, float> &database, std::ifstream &file)
 	}
 	return true;
 }
-// void print(int errorcode, std::smatch &match, float &value, std::map<unsigned int, float> &database)
-// {
-
-// }
 
 
 
@@ -91,7 +87,7 @@ int main (int argc, char **argv)
 
 	std::ifstream					database_file("./data.csv", std::fstream::in);
 	std::ifstream					input_file(argv[1], std::fstream::in);
-	std::map<unsigned int, float>	database;
+	std::map<unsigned int, double>	database;
 
 
 	if (!database_file.is_open() || !database_file.good())
@@ -99,7 +95,7 @@ int main (int argc, char **argv)
 	if (!input_file.is_open() || !input_file.good())
 		{std::cout<<DR<<"ERROR! Input file not correctly provided!"<<X<<std::endl; database_file.close(); return 1;}
 	if (!fill_database(database, database_file))
-		{input_file.close(); database_file.close(); return 3;}
+		{input_file.close(); database_file.close(); std::cout<<DR<<"Databse Error!"<<X<<std::endl; return 3;}
 	database_file.close();
 
 	
@@ -107,7 +103,7 @@ int main (int argc, char **argv)
 	std::smatch						match;
 	std::string						current_line;
 	unsigned int 					input_date;
-	float							input_value;
+	double							input_value;
 	bool							header = false;
 	int								errorcode = 0;
 	int								range = 0;
@@ -153,6 +149,8 @@ int main (int argc, char **argv)
 				std::cout<<std::endl;
 		}
 		errorcode = 0;
+		range = 0;
 	}
 	input_file.close();
 	return 0;
+}

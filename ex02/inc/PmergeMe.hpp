@@ -22,7 +22,6 @@ size_t	jacobsthal(int mode);
 template <typename T>
 typename T::iterator binary_search(T &vec, typename T::iterator last, int value, size_t &comp_count, size_t &range)
 {
-	last -= range;
 	typename T::iterator first = vec.begin() + range - 1;
 	size_t count = (last - first) / range + 1;
 	size_t step;
