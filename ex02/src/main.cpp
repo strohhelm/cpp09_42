@@ -57,13 +57,11 @@ int main(int argc, char **argv)
 			if (!std::regex_match(tmp, match, pattern))
 				throw std::string("Oh thats not a valid input only one positive integer value per argument!");
 			int value = std::stoi(tmp);
-			// if (std::find(vec.begin(), vec.end(), value) != vec.end())
-			// 	throw std::string("Oh no duplicates allowed!");
 			vec.push_back(value);
 			deq.push_back(value);
 		}
 
-
+		//printing before sorting
 		std::cout<<"VEC Before: ";
 		for_each (vec.begin(), vec.end(), [](int i){std::cout<<i<<" ";});
 		std::cout<<"\nDEQ Before: ";
@@ -79,6 +77,7 @@ int main(int argc, char **argv)
 		pmerge(deq, 0, deq_counter);
 		const auto deq_end = std::chrono::high_resolution_clock::now(); 
 		
+		//printing after sorting
 		std::cout<<std::endl;
 		std::cout<<"VEC After: ";
 		for_each (vec.begin(), vec.end(), [](int i){std::cout<<i<<" ";});
@@ -87,6 +86,8 @@ int main(int argc, char **argv)
 		for_each (deq.begin(), deq.end(), [](int i){std::cout<<i<<" ";});
 		std::cout<<std::endl;
 		
+
+		//making sure everything works fine
 		for(size_t i = 0; i < vec.size(); i++)
 		{
 			if (vec[i] != deq[i])
@@ -97,9 +98,9 @@ int main(int argc, char **argv)
 		if (!std::is_sorted(vec.begin(), vec.end()))
 			throw std::string("LOL not sorted, you fucked up!");
 		std::cout<<"Maximum comparisons for "<<argc - 1<<" numbers: "<<calc_max_comp(static_cast<size_t>((argc - 1)))<<std::endl;
+		
 
-
-		//print statements
+		//time evaluation
 		auto duration_vec = std::chrono::duration_cast<std::chrono::microseconds>(vec_end - vec_start);
 		auto duration_deq = std::chrono::duration_cast<std::chrono::microseconds>(deq_end - deq_start);
 		//vector
@@ -121,11 +122,9 @@ int main(int argc, char **argv)
 // 20  1  4  2 17 11  9  3  8  5 10 12 14 18 13  6 21  7 15 19 16 
 // 18 20 13  2 10  6 17  8  3 21  4  7  5  9 15 16  1 12 11 14 19
 // 15 10 11  9 13  8 14  3 16  2 18 12  1  7 21 17 19  6  5 20 4
-// "15", "10", "11", " 9", "13", " 8", "14", " 3", "16", " 2", "18", "12", " 1", " 7", "21", "17", "19", " 6", " 5", "20", "4"
 // 7  8 16 21 18 13  6 14 11  9  1 12  5 10  3 20  4 19 15 17
 
 //6 3 7 2 7 5 9 5 8 3 9 2 4 6 3 2 8 10 7 8 9
-// "6", "3", "7", "2", "7", "5", "9", "5", "8", "3", "9", "2", "4", "6", "3", "2", "8", "10", "7", "8", "9"
 
 //14 9 9 13 7 1 9 15 15 7 12 12 15 7 10 12 18 8 1 17 19
 // 5 9 16 11 13 15 8 14 8 3 19 2 16 11 5 20 14 11 18 21 18 
