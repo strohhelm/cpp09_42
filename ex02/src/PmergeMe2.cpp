@@ -85,7 +85,7 @@ void pmerge(std::deque<int> &deq, int lvl, size_t &counter)
 			if (bn_index + 1 < index_tracker.size())
 				last = deq.begin() + (range - 1) + index_tracker[bn_index + 1] * range - range;
 			else
-				last = deq.begin() -1 + (deq.size() / range) * range - range;
+				last = deq.begin() -1 + (deq.size() / range) * range;
 			// std::cout << "last range:"<<std::endl;
 			// for (size_t it = 0; it < range; it ++){std::cout << *(last - (range - 1) + it)<<" ";}
 			// std::cout <<std::endl;

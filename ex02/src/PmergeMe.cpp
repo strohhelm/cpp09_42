@@ -81,12 +81,13 @@ void pmerge(std::vector<int> &vec, int lvl, size_t &counter)
 			//b1 is already on mainline so bn line starts with bn_index 2 at range index 0 (begin + (range - 1)) -> jacobsthal - 2
 		while (current_jacobsthal > previous_jacobsthal)
 		{
+			// std::cout<<"current Jacobsthal: "<<current_jacobsthal<<"	previous: "<<previous_jacobsthal<<std::endl;
 			bn_index = (current_jacobsthal - 1) * 2;
 			//in case the rest of the sequence is enough to build its own element blast
 			if (bn_index + 1 < index_tracker.size())
 				last = vec.begin() + (range - 1) + index_tracker[bn_index + 1] * range - range;
 			else
-				last = vec.begin() -1 + (vec.size() / range) * range - range;
+				last = vec.begin() -1 + (vec.size() / range) * range;
 
 			// std::cout << "last range:"<<std::endl;
 			// for (size_t it = 0; it < range; it ++){std::cout << *(last - (range - 1) + it)<<" ";}
